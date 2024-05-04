@@ -26,7 +26,7 @@ document.getElementById('budgetForm').addEventListener('submit', function(event)
     event.preventDefault();
     const title = document.getElementById('title').value;
     const amount = parseFloat(document.getElementById('amount').value);
-    const description = document.getElementById('description').value;
+    const description = document.getElementById('description').value || ' ';
     const currency = document.getElementById('currency').textContent;
     addBudgetEntry(title, amount, description, currency);
     document.getElementById('title').value = '';

@@ -1,10 +1,23 @@
+/*
+Created by Sari I. Younan
+02/05/2024 19:13:18
+test.js
+*/
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('currency').textContent = data.currency;
+            console.log('Fetched data:', data);  // Check what data is returned
+            if(data && data.currency) {
+                document.getElementById('currency').textContent = data.currency;
+            } else {
+                document.getElementById('currency').textContent = 'USD';  // Fallback if no currency data
+            }
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error('Error fetching currency:', error);
             document.getElementById('currency').textContent = 'USD';
         });
 });

@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
-            const currency = determineCurrency(data.country_code);
-            document.getElementById('currency').textContent = currency;
+            document.getElementById('currency').textContent = determineCurrency(data.country_code);
         })
         .catch(() => {
             document.getElementById('currency').textContent = 'USD';

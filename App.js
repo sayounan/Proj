@@ -35,7 +35,18 @@ document.getElementById('budgetForm').addEventListener('submit', function(event)
 });
 
 function addBudgetEntry(title, amount, description, currency) {
-    const entryDiv = document.createElement('div');
-    entryDiv.textContent = `${title}: ${amount.toFixed(2)} ${currency} : ${description}`;
-    document.getElementById('budgetList').appendChild(entryDiv);
+    const table = document.createElement('budgetTable').getElementsByTagName('tbody')[0];
+    const row = table.insertRow();
+
+    const titleCell = row.insertCell(0);
+    titleCell.textContent = title;
+
+    const amountCell = row.insertCell(1);
+    amountCell.textContent = amount.toFixed(2);
+
+    const currencyCell = row.insertCell(2);
+    currencyCell.textContent = currency;
+
+    const descriptionCell = row.insertCell(3);
+    descriptionCell.textContent = description;
 }

@@ -34,7 +34,7 @@ document.getElementById('budgetForm').addEventListener('submit', function(event)
     document.getElementById('description').value = '';
 });
 
-function addBudgetEntry(title, amount, description, currency) {
+function addBudgetEntry(title, amount, description) {
     const table = document.getElementById('budgetTable').getElementsByTagName('tbody')[0];
     const row = table.insertRow();
 
@@ -44,9 +44,6 @@ function addBudgetEntry(title, amount, description, currency) {
     const amountCell = row.insertCell(1);
     amountCell.textContent = amount.toFixed(2);
 
-    const currencyCell = row.insertCell(2);
-    currencyCell.textContent = currency;
-
-    const descriptionCell = row.insertCell(3);
+    const descriptionCell = row.insertCell(2);
     descriptionCell.textContent = description;
 }

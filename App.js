@@ -35,7 +35,7 @@ document.getElementById('budgetForm').addEventListener('submit', function(event)
 });
 
 function addBudgetEntry(title, amount, description, currency) {
-    const table = document.createElement('budgetTable').getElementsByTagName('tbody')[0];
+    const table = document.getElementById('budgetTable').getElementsByTagName('tbody')[0];
     const row = table.insertRow();
 
     const titleCell = row.insertCell(0);

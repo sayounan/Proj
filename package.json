@@ -2,8 +2,9 @@
   "name": "proj",
   "version": "1.0.0",
   "description": "",
-  "main": "App.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,9 +12,15 @@
     "url": "https://github.com/sayounan/Proj.git"
   },
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "jsdom": "^24.0.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   }
 }

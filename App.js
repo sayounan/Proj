@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('currency').textContent = determineCurrency(data.country_code);
+            document.getElementById('currency').textContent = data.currency;
         })
         .catch(() => {
             document.getElementById('currency').textContent = 'USD';
@@ -21,18 +21,8 @@ document.getElementById('budgetForm').addEventListener('submit', function(event)
     document.getElementById('description').value = '';
 });
 
-function determineCurrency(countryCode) {
-    const currencyMap = {
-        'US': 'USD',
-        'JP': 'JPY',
-        'KW': 'KWD',
-        'EU': 'EUR',
-    };
-    return currencyMap[countryCode] || 'USD';
-}
-
 function addBudgetEntry(title, amount, description, currency) {
     const entryDiv = document.createElement('div');
-    entryDiv.textContent = `${title}: ${amount.toFixed(2)} ${currency}: ${description}`;
+    entryDiv.textContent = `${title}: ${amount.toFixed(2)} ${currency} : ${description}`;
     document.getElementById('budgetList').appendChild(entryDiv);
 }

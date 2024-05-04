@@ -22,18 +22,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Serve the login page
+app.get('/', function (req, res) {
+    if (req.isAuthenticated()) {
+        res.sendFile(path.join(__dirname, 'public', '/index.html'));
+    } else {
+        res.redirect('/login');
+    }
+});
+
+// Login page
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-// Serve the signup page
+// Signup page
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
 });
 
-// Main entry, index page served only when authenticated
-app.get('/', checkAuthenticated, (req, res) => {
+// Index page
+app.get('/index', checkAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
@@ -63,8 +71,8 @@ app.post('/signup', (req, res) => {
     res.redirect('/login'); // Redirect to login after signup
 });
 
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
+app.post('/', passport.authenticate('local', {
+    successRedirect: '/index',
     failureRedirect: '/login'
 }));
 
@@ -78,7 +86,7 @@ function checkAuthenticated(req, res, next) {
 app.post('/add-entry', checkAuthenticated, (req, res) => {
     const { title, amount, description } = req.body;
     console.log(title, amount, description);
-    res.json({ message: 'Entry added successfully' });
+    res.json({ message: 'Entry added successfully', data: { title, amount, description }})
 });
 
 app.listen(PORT, () => {

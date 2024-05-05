@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const amount = parseFloat(document.getElementById('amount').value);
             const description = document.getElementById('description').value || 'No description';
 
-            fetch('/add-entry', {
+            fetch('localhost:8080/add-entry', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, amount, description })

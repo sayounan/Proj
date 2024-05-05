@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 mongoose.Promise = global.Promise;
 
 // Connect to MongoDB - Adjusted for promise handling
-mongoose.connect(process.env.DB)
+mongoose.connect("mongodb+srv://cu_user:cu_rulez@movies.56ynmfp.mongodb.net/?retryWrites=true&w=majority&appName=movies")
     .then(() => console.log("connected"))
     .catch(error => console.log("could not connect", error));
 

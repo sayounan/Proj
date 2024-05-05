@@ -52,8 +52,6 @@ router.post('/signup', (req, res) => {
     }
 });
 
-
-
 router.post('/signin', async (req, res) => {
     console.log("Signin route hit with username:", req.body.username);
     try {
@@ -92,8 +90,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 passport.use(new LocalStrategy((username, password, done) => {
     const user = users.find(u => u.username === username);

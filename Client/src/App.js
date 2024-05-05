@@ -6,12 +6,13 @@ test.js
 
 import React from 'react';
 // import './App.css';
-import Authentication from './authentication';
+import Authentication from './components/authentication';
 import {HashRouter, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store';
-import Login from "./login";
-import BudgetTracker from "./budgetTracker";
+import store from './stores/store';
+import Login from "./components/login";
+import BudgetTracker from "./components/budgetTracker";
+import Register from "./components/register";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <div>
                         <Route exact path="/" render={()=><Login />}/>
                         <Route path="/signin" render={()=><Authentication />}/>
+                        <Route path="/signup" render={()=><Register />}/>
                         <Route exact path="/sheet" render={()=><BudgetTracker />}/>
                     </div>
                 </HashRouter>

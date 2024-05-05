@@ -17,7 +17,7 @@ function logout() {
 
 export function submitLogin(data) {
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/signin`, {
+        return fetch(`localhost:8080/signin`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,7 @@ export function submitLogin(data) {
 
 export function submitRegister(data) {
     return dispatch => {
-        return fetch(`${env.REACT_APP_API_URL}/signup`, {
+        return fetch(`localhost:8080/signup`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

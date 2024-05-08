@@ -103,20 +103,6 @@ passport.deserializeUser((username, done) => {
     done(null, user);
 });
 
-/*app.post('/signup', (req, res) => {
-    console.log("Request body: ", req.body);
-    const { username, password } = req.body;
-    console.log("Password: ", password);
-    const hashedPassword = bcrypt.hashSync(password, 12);
-    users.push({ username, password: hashedPassword });
-    res.redirect('/login'); // Redirect to login after signup
-});
-
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/index',
-    failureRedirect: '/login'
-}));*/
-
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();

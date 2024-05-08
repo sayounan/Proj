@@ -16,7 +16,8 @@ function logout() {
 
 export function submitLogin(data) {
     return dispatch => {
-        return fetch(`http://localhost:8080/signin`, {
+        //return fetch(`http://localhost:8080/signin`, {
+        return fetch(`https://proj-f7nj.onrender.com/signin`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -40,7 +41,8 @@ export function submitLogin(data) {
 
 export function submitRegister(data) {
     return dispatch => {
-        return fetch(`http://localhost:8080/signup`, {
+        //return fetch(`http://localhost:8080/signup`, {
+        return fetch(`https://proj-f7nj.onrender.com/signup`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

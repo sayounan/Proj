@@ -13,6 +13,7 @@ import store from './stores/store';
 import Login from "./components/login";
 import BudgetTracker from "./components/budgetTracker";
 import Register from "./components/register";
+import Movieheader from "./components/movieheader";
 
 function App() {
     return (
@@ -20,7 +21,8 @@ function App() {
             <Provider store={store}>
                 <HashRouter>
                     <div>
-                        <Route exact path="/" render={()=><Login />}/>
+                        <Route exact path="/" render={()=><Authentication />}/>
+                        <Route exact path="/login" render={()=><Authentication />}/>
                         <Route path="/signin" render={()=><Authentication />}/>
                         <Route path="/signup" render={()=><Register />}/>
                         <Route exact path="/sheet" render={()=><BudgetTracker />}/>

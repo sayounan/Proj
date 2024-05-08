@@ -4,14 +4,22 @@ Created by Sari I. Younan
 budgetTracker.js
 */
 
-import React, { useState } from 'react';
-import './styles.css';  // Assuming styles.css is in the src folder
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authActions';
+import { withRouter } from 'react-router-dom'; // Import withRouter for navigation
+import './styles.css';
 
-function BudgetTracker() {
-    const [currency, setCurrency] = useState('USD');
-    const [entries, setEntries] = useState([]);
+class BudgetTracker extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currency: 'USD',
+            entries: []
+        };
+    }
 
-    const handleFormSubmit = (event) => {
+    handleFormSubmit = (event) => {
         event.preventDefault();
         const title = event.target.title.value;
         const amount = event.target.amount.value;
@@ -19,12 +27,14 @@ function BudgetTracker() {
 
         const newEntry = {
             timestamp: new Date().toLocaleString(),
-            title,
-            amount,
-            description
+            title: title,
+            amount: amount,
+            description: description
         };
 
-        setEntries([...entries, newEntry]);
+        this.setState(prevState => ({
+            entries: [...prevState.entries, newEntry]
+        }));
 
         // Reset form
         event.target.title.value = '';
@@ -32,47 +42,56 @@ function BudgetTracker() {
         event.target.description.value = '';
     };
 
-    return (
-        <div>
-            <h1>Budget Tracker</h1>
-            <form id="budgetForm" onSubmit={handleFormSubmit}>
-                <p>Currency: <span id="currency">{currency}</span></p>
-                <label htmlFor="title">Title</label>
-                <input type="text" id="title" name="title" placeholder="Enter title" required />
+    logout = () => {
+        this.props.logoutUser();  // Dispatch logout action
+        this.props.history.push('/login');  // Redirect to login page
+    };
 
-                <label htmlFor="amount">Amount</label>
-                <input type="number" id="amount" name="amount" placeholder="Enter amount" required />
+    render() {
+        const { currency, entries } = this.state;
+        return (
+            <div>
+                <h1>Budget Tracker</h1>
+                <button onClick={this.logout}>Logout</button>
+                <form id="budgetForm" onSubmit={this.handleFormSubmit}>
+                    <p>Currency: <span id="currency">{currency}</span></p>
+                    <label htmlFor="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter title" required/>
 
-                <label htmlFor="description">Description</label>
-                <input type="text" id="description" name="description" placeholder="Enter description" />
+                    <label htmlFor="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount" required/>
 
-                <button type="submit">Add Entry</button>
-            </form>
+                    <label htmlFor="description">Description</label>
+                    <input type="text" id="description" name="description" placeholder="Enter description"/>
 
-            <div id="budgetTableContainer">
-                <table id="budgetTable">
-                    <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Title</th>
-                        <th>Amount</th>
-                        <th>Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {entries.map((entry, index) => (
-                        <tr key={index}>
-                            <td>{entry.timestamp}</td>
-                            <td>{entry.title}</td>
-                            <td>{entry.amount}</td>
-                            <td>{entry.description}</td>
+                    <button type="submit">Add Entry</button>
+                </form>
+
+                <div id="budgetTableContainer">
+                    <table id="budgetTable">
+                        <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>Description</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {entries.map((entry, index) => (
+                            <tr key={index}>
+                                <td>{entry.timestamp}</td>
+                                <td>{entry.title}</td>
+                                <td>{entry.amount}</td>
+                                <td>{entry.description}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
-export default BudgetTracker;
+export default withRouter(connect(null, { logoutUser })(BudgetTracker));

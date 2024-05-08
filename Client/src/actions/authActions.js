@@ -1,5 +1,4 @@
 import actionTypes from '../constants/actionTypes';
-//import runtimeEnv from '@mars/heroku-js-runtime-env'
 const env = process.env;
 
 function userLoggedIn(username) {
@@ -17,7 +16,7 @@ function logout() {
 
 export function submitLogin(data) {
     return dispatch => {
-        return fetch(`localhost:8080/signin`, {
+        return fetch(`http://localhost:8080/signin`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +40,7 @@ export function submitLogin(data) {
 
 export function submitRegister(data) {
     return dispatch => {
-        return fetch(`localhost:8080/signup`, {
+        return fetch(`http://localhost:8080/signup`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

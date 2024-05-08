@@ -12,7 +12,7 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const User =require('./Users');
+const User = require('./Users');
 
 require('dotenv').config();
 
@@ -26,16 +26,20 @@ app.use(session({ secret: process.env.SECRET_KEY, resave: false, saveUninitializ
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors())
+app.use(express.json())
 
-app.get('/', function (req, res) {
+app.get('/',
+    function (req, res) {
     if (req.isAuthenticated()) {
-        res.redirect('/index.html');
+        res.redirect('/sheet');
     } else {
         res.redirect('/login');
     }
 });
 
-router.post('/signup', (req, res) => {
+app.post('/signup',
+    (req, res) => {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please include both username and password to signup.'});
     } else {
@@ -52,10 +56,12 @@ router.post('/signup', (req, res) => {
     }
 });
 
-router.post('/signin', async (req, res) => {
+app.post('/signin',
+    async (req, res) => {
     console.log("Signin route hit with username:", req.body.username);
     try {
-        const user = await User.findOne({ username: req.body.username }).select('+password').exec();
+        const user = await User.findOne({ username: req.body.username })
+            .select('+password').exec();
         if (!user) {
             console.log("User not found:", req.body.username);
             return res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
@@ -78,18 +84,6 @@ router.post('/signin', async (req, res) => {
     }
 });
 
-// Index page
-app.get('/index', checkAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'sheetsheet.html'));
-});
-
-app.get('/logout', (req, res) => {
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        res.redirect('/login');
-    });
-});
-
 const PORT = process.env.PORT || 8080;
 
 passport.use(new LocalStrategy((username, password, done) => {
@@ -109,8 +103,10 @@ passport.deserializeUser((username, done) => {
     done(null, user);
 });
 
-app.post('/signup', (req, res) => {
+/*app.post('/signup', (req, res) => {
+    console.log("Request body: ", req.body);
     const { username, password } = req.body;
+    console.log("Password: ", password);
     const hashedPassword = bcrypt.hashSync(password, 12);
     users.push({ username, password: hashedPassword });
     res.redirect('/login'); // Redirect to login after signup
@@ -119,7 +115,7 @@ app.post('/signup', (req, res) => {
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/index',
     failureRedirect: '/login'
-}));
+}));*/
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

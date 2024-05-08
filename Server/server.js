@@ -18,7 +18,7 @@ require('dotenv').config();
 
 const users = [];
 
-const router = express.Router();
+// const router = express.Router();
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));

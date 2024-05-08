@@ -19,6 +19,21 @@ class BudgetTracker extends Component {
         };
     }
 
+    componentDidMount() {
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    currency: data.currency || 'USD'
+                });
+            })
+            .catch(() => {
+                this.setState({
+                    currency: 'USD'
+                });
+            });
+    }
+
     handleFormSubmit = (event) => {
         event.preventDefault();
         const title = event.target.title.value;
@@ -43,8 +58,8 @@ class BudgetTracker extends Component {
     };
 
     logout = () => {
-        this.props.logoutUser();  // Dispatch logout action
-        this.props.history.push('/login');  // Redirect to login page
+        this.props.logoutUser();
+        this.props.history.push('/login');
     };
 
     render() {
@@ -56,7 +71,7 @@ class BudgetTracker extends Component {
                 <form id="budgetForm" onSubmit={this.handleFormSubmit}>
                     <p>Currency: <span id="currency">{currency}</span></p>
                     <label htmlFor="title">Title</label>
-                    <input type="text" id="title" name="title" placeholder="Enter title" required/>
+                    <input type="text" id="title" name="title" placeholder="Enter Expense" required/>
 
                     <label htmlFor="amount">Amount</label>
                     <input type="number" id="amount" name="amount" placeholder="Enter amount" required/>

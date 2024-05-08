@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = document.getElementById('title').value;
             const amount = parseFloat(document.getElementById('amount').value);
             const description = document.getElementById('description').value || 'No description';
+            const { currency } = this.state;
 
             //fetch('localhost:8080/add-entry', {
             fetch('https://proj-f7nj.onrender.com/add-entry', {
@@ -39,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('title').value = '';
                     document.getElementById('amount').value = '';
                     document.getElementById('description').value = '';
+                    document.getElementById('currency').value = '';
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -47,11 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function addBudgetEntry(title, amount, description) {
+function addBudgetEntry(title, amount, currency, description) {
     const table = document.getElementById('budgetTable').getElementsByTagName('tbody')[0];
     const row = table.insertRow();
     const timestamp = new Date().toLocaleString();
-    const cellsText = [timestamp, title, amount.toFixed(2), description];
+    const cellsText = [timestamp, title, amount.toFixed(2), currency, description];
     cellsText.forEach(text => {
         const cell = row.insertCell();
         cell.textContent = text;

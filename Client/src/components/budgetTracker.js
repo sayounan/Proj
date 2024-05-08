@@ -38,12 +38,14 @@ class BudgetTracker extends Component {
         event.preventDefault();
         const title = event.target.title.value;
         const amount = event.target.amount.value;
+        const { currency } = this.state;
         const description = event.target.description.value || 'No description';
 
         const newEntry = {
             timestamp: new Date().toLocaleString(),
             title: title,
             amount: amount,
+            currency: currency,
             description: description
         };
 
@@ -54,6 +56,7 @@ class BudgetTracker extends Component {
         // Reset form
         event.target.title.value = '';
         event.target.amount.value = '';
+        event.target.currency.value = '';
         event.target.description.value = '';
     };
 
@@ -89,6 +92,7 @@ class BudgetTracker extends Component {
                             <th>Timestamp</th>
                             <th>Title</th>
                             <th>Amount</th>
+                            <th>Currency</th>
                             <th>Description</th>
                         </tr>
                         </thead>
@@ -98,6 +102,7 @@ class BudgetTracker extends Component {
                                 <td>{entry.timestamp}</td>
                                 <td>{entry.title}</td>
                                 <td>{entry.amount}</td>
+                                <td>{entry.currency}</td>
                                 <td>{entry.description}</td>
                             </tr>
                         ))}
